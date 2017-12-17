@@ -52,8 +52,27 @@ class MainWindow(tk.Frame):
         if(img.size != 0):
             self.image=img
 
+    def showHistGreyScale(img):
+        hist = cv2.calcHist([img], [0], None, [256], [0, 256])
+        plt.plot(hist)
+        plt.xlim([0, 256])
+        plt.show()
+
     def showColorHist(self):
-        print('Not implemented')
+        if (self.image.size != 0):
+            color = ('b', 'g', 'r')
+            for channel, col in enumerate(color):
+                histr = cv2.calcHist([self.image], [0], None, [256], [0, 256], False)
+                plt.plot(histr, color=col)
+                plt.xlim([0, 256])
+            plt.title('Histogram for color scale picture')
+            plt.show()
+
+            while True:
+                k = cv2.waitKey(0) & 0xFF
+                if k == 27: break  # ESC key to exit
+            cv2.destroyAllWindows()
+
 
 if __name__ == "__main__":
     root = tk.Tk()
