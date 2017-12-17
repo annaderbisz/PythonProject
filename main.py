@@ -11,9 +11,9 @@ class MainWindow(tk.Frame):
         self.traning_button = tk.Button(self, text="Create trening window",
                                 command=self.create_trening_window)
         self.traning_button.pack(side="top")
-        # self.testing_button = tk.Button(self, text="Create testing window",
-        #                         command=self.create_testing_window)
-        # self.testing_button.pack(side="top")
+        self.testing_button = tk.Button(self, text="Create testing window",
+                                 command=self.create_testing_window)
+        self.testing_button.pack(side="top")
         self.image = np.array([])
 
     def create_trening_window(self):
@@ -26,6 +26,14 @@ class MainWindow(tk.Frame):
         trainButton = tk.Button(t, text="Train", command=self.train)
         trainButton.pack(side="top", fill="both", expand=True, padx=100, pady=100)
 
+    def create_testing_window(self):
+        t = tk.Toplevel(self)
+        t.wm_title("Testing pannel")
+        chooseFileButton = tk.Button(t, text="Choose file", command=self.chooseFile)
+        chooseFileButton.pack(side="top", fill="both", expand=True, padx=100, pady=100)
+        showHistButton = tk.Button(t, text="Show histogram", command=self.showColorHist)
+        showHistButton.pack(side="top", fill="both", expand=True, padx=100, pady=100)
+
     def train(self):
         print('Not implemented')
 
@@ -33,6 +41,12 @@ class MainWindow(tk.Frame):
         print('Not implemented')
 
     def checkTreiningData(self):
+        print('Not implemented')
+
+    def chooseFile(self):
+        print('Not implemented')
+
+    def showColorHist(self):
         print('Not implemented')
 
 if __name__ == "__main__":
