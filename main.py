@@ -44,7 +44,13 @@ class MainWindow(tk.Frame):
         print('Not implemented')
 
     def chooseFile(self):
-        print('Not implemented')
+        filename = askopenfilename()  # show an "Open" dialog box and return the path to the selected file
+        print(filename)
+        jpgfile = Image.open(filename)
+        print(jpgfile.bits, jpgfile.size, jpgfile.format)
+        img = cv2.imread(filename, 0)
+        if(img.size != 0):
+            self.image=img
 
     def showColorHist(self):
         print('Not implemented')
