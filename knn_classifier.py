@@ -14,3 +14,13 @@ def knn_maker_algoritm(trainfolderpath):
     accKnnModel = getAccuracy(knnModel, dataModel.testFeat, dataModel.testLabels)
     print("KNNClassifier accuracy: {:.2f}%".format(accKnnModel * 100))
     saveModel(knnModel)
+
+
+    #svm
+    #random forest
+    #regresja logistyczna
+    #perceptron
+    #mlp
+    # wszytsko na jednym oknie
+    # wyswietlać pierwsze pliki
+

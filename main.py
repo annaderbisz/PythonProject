@@ -12,6 +12,9 @@ from KMeans_classifier import kmeans_algoritm
 from helper import getModel
 from knn_classifier import knn_maker_algoritm
 from decision_tree_classifier import decision_tree_maker_algoritm
+from SVM_classifier import svm_maker_algoritm
+from RandomForest_classifier import random_forest_maker_algoritm
+from Logistic_regression_classifier import logistic_regression_maker_algoritm
 
 class MainWindow(tk.Frame):
     def __init__(self, *args, **kwargs):
@@ -35,6 +38,12 @@ class MainWindow(tk.Frame):
         trainKnnButton.pack(side="top", fill="both", expand=True, padx=50, pady=50)
         trainDecisionTreeButton = tk.Button(t, text="Train using decision tree classifier", command=self.train_decision_tree)
         trainDecisionTreeButton.pack(side="top", fill="both", expand=True, padx=50, pady=50)
+        trainSVMButton = tk.Button(t, text="Train using SVM classifier", command=self.train_svm)
+        trainSVMButton.pack(side="top", fill="both", expand=True, padx=50, pady=50)
+        trainRandForestButton = tk.Button(t, text="Train using Random Forest classifier", command=self.train_randForest)
+        trainRandForestButton.pack(side="top", fill="both", expand=True, padx=50, pady=50)
+        trainLogisticRegressionButton = tk.Button(t, text="Train using Logistic Regression classifier", command=self.train_logistic_regression)
+        trainLogisticRegressionButton.pack(side="top", fill="both", expand=True, padx=50, pady=50)
         trainButton = tk.Button(t, text="Train and save the best classifier", command=self.train)
         trainButton.pack(side="top", fill="both", expand=True, padx=50, pady=50)
         kMeansButton = tk.Button(t, text="K-Means", command=self.kmeans)
@@ -56,13 +65,21 @@ class MainWindow(tk.Frame):
     def train_knn(self):
         knn_maker_algoritm(self.train_folder)
         print("END")
+    def train_logistic_regression(self):
+        logistic_regression_maker_algoritm(self.train_folder)
+        print("END")
     def train_decision_tree(self):
         decision_tree_maker_algoritm(self.train_folder)
         print("END")
     def kmeans(self):
         kmeans_algoritm(self.train_folder, 2)
         print("END")
-
+    def train_randForest(self):
+        random_forest_maker_algoritm(self.train_folder)
+        print("END")
+    def train_svm(self):
+        svm_maker_algoritm(self.train_folder)
+        print("END")
     def chooseTrainingData(self):
         self.train_folder = askdirectory()  # show an "Open" dialog box and return the path to the selected file
 
