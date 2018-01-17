@@ -14,7 +14,9 @@ from knn_classifier import knn_maker_algoritm
 from decision_tree_classifier import decision_tree_maker_algoritm
 from SVM_classifier import svm_maker_algoritm
 from RandomForest_classifier import random_forest_maker_algoritm
+from perceptron_classifier import  perception_maker_algoritm
 from Logistic_regression_classifier import logistic_regression_maker_algoritm
+from mlp_classifier import  mlp_maker_algoritm
 
 class MainWindow(tk.Frame):
     def __init__(self, *args, **kwargs):
@@ -31,23 +33,32 @@ class MainWindow(tk.Frame):
         t = tk.Toplevel(self)
         t.wm_title("Traning pannel")
         chooseTrainingDataButton = tk.Button(t, text="Choose training data", command=self.chooseTrainingData)
-        chooseTrainingDataButton.pack(side="top", fill="both", expand=True, padx=50, pady=50)
+        chooseTrainingDataButton.pack(side="top", fill="both", expand=True, padx=25, pady=25)
         checkTrainingDataButton = tk.Button(t, text="Check data", command=self.checkTrainingData)
-        checkTrainingDataButton.pack(side="top", fill="both", expand=True, padx=50, pady=50)
+        checkTrainingDataButton.pack(side="top", fill="both", expand=True, padx=25, pady=25)
         trainKnnButton = tk.Button(t, text="Train using knn classifier", command=self.train_knn)
-        trainKnnButton.pack(side="top", fill="both", expand=True, padx=50, pady=50)
+        trainKnnButton.pack(side="top", fill="both", expand=True, padx=25, pady=25)
         trainDecisionTreeButton = tk.Button(t, text="Train using decision tree classifier", command=self.train_decision_tree)
-        trainDecisionTreeButton.pack(side="top", fill="both", expand=True, padx=50, pady=50)
+        trainDecisionTreeButton.pack(side="top", fill="both", expand=True, padx=25, pady=25)
         trainSVMButton = tk.Button(t, text="Train using SVM classifier", command=self.train_svm)
-        trainSVMButton.pack(side="top", fill="both", expand=True, padx=50, pady=50)
+        trainSVMButton.pack(side="top", fill="both", expand=True, padx=25, pady=25)
         trainRandForestButton = tk.Button(t, text="Train using Random Forest classifier", command=self.train_randForest)
-        trainRandForestButton.pack(side="top", fill="both", expand=True, padx=50, pady=50)
+        trainRandForestButton.pack(side="top", fill="both", expand=True, padx=25, pady=25)
         trainLogisticRegressionButton = tk.Button(t, text="Train using Logistic Regression classifier", command=self.train_logistic_regression)
-        trainLogisticRegressionButton.pack(side="top", fill="both", expand=True, padx=50, pady=50)
+        trainLogisticRegressionButton.pack(side="top", fill="both", expand=True, padx=25, pady=25)
+
+        trainMLPButton = tk.Button(t, text="Train using MLP classifier",
+                                                  command=self.train_mlp)
+        trainMLPButton.pack(side="top", fill="both", expand=True, padx=25, pady=25)
+
+        trainPerceptronButton = tk.Button(t, text="Train using Perception classifier",
+                                                  command=self.train_perception)
+        trainPerceptronButton.pack(side="top", fill="both", expand=True, padx=25, pady=25)
+
         trainButton = tk.Button(t, text="Train and save the best classifier", command=self.train)
-        trainButton.pack(side="top", fill="both", expand=True, padx=50, pady=50)
+        trainButton.pack(side="top", fill="both", expand=True, padx=25, pady=25)
         kMeansButton = tk.Button(t, text="K-Means", command=self.kmeans)
-        kMeansButton.pack(side="top", fill="both", expand=True, padx=50, pady=50)
+        kMeansButton.pack(side="top", fill="both", expand=True, padx=25, pady=25)
 
     def create_testing_window(self):
         t = tk.Toplevel(self)
@@ -64,6 +75,12 @@ class MainWindow(tk.Frame):
         print("END")
     def train_knn(self):
         knn_maker_algoritm(self.train_folder)
+        print("END")
+    def train_mlp(self):
+        mlp_maker_algoritm(self.train_folder)
+        print("END")
+    def train_perception(self):
+        perception_maker_algoritm(self.train_folder)
         print("END")
     def train_logistic_regression(self):
         logistic_regression_maker_algoritm(self.train_folder)
