@@ -15,7 +15,4 @@ def knn_maker_algoritm(trainfolderpath):
     print("KNNClassifier accuracy: {:.2f}%".format(accKnnModel * 100))
     saveModel(knnModel)
 
-    #mlp
-    # wszytsko na jednym oknie
-    # wyswietlać pierwsze pliki
 

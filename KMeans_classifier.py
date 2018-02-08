@@ -23,7 +23,7 @@ def save_images(imagePaths, classes):
         cv2.imwrite(image_path_to_save, image)
 
 def kmeans_algoritm(trainfolderpath, clusters_number):
-    features = get_features(trainfolderpath)
+    features = get_features(trainfolderpath).reshape(-1,1)
     classes = classify(features, clusters_number)
     imagePaths = list(paths.list_images(trainfolderpath))
     save_images(imagePaths, classes)

@@ -5,7 +5,6 @@ import numpy as np
 from matplotlib import pyplot as plt
 import cv2
 from histogram import extract_color_histogram
-from classifier_chooser import chooseClassifier
 from imutils import paths
 from tkinter import messagebox
 from KMeans_classifier import kmeans_algoritm
@@ -17,85 +16,31 @@ from RandomForest_classifier import random_forest_maker_algoritm
 from perceptron_classifier import  perception_maker_algoritm
 from Logistic_regression_classifier import logistic_regression_maker_algoritm
 from mlp_classifier import  mlp_maker_algoritm
+from PIL import Image, ImageTk
+from tkinter import Label
+
 
 class MainWindow(tk.Frame):
-    def __init__(self, *args, **kwargs):
-        tk.Frame.__init__(self, *args, **kwargs)
-        self.traning_button = tk.Button(self, text="Create trening window",
-                                        command=self.create_traning_window)
-        self.traning_button.pack(side="top", fill="both", expand=True, padx=50, pady=50)
-        self.testing_button = tk.Button(self, text="Create testing window",
-                                 command=self.create_testing_window)
-        self.testing_button.pack(side="top", fill="both", expand=True, padx=50, pady=50)
-        self.image = np.array([])
-        self.train_folder = ""
-    def create_traning_window(self):
-        t = tk.Toplevel(self)
-        t.wm_title("Traning pannel")
-        chooseTrainingDataButton = tk.Button(t, text="Choose training data", command=self.chooseTrainingData)
-        chooseTrainingDataButton.pack(side="top", fill="both", expand=True, padx=25, pady=25)
-        checkTrainingDataButton = tk.Button(t, text="Check data", command=self.checkTrainingData)
-        checkTrainingDataButton.pack(side="top", fill="both", expand=True, padx=25, pady=25)
-        trainKnnButton = tk.Button(t, text="Train using knn classifier", command=self.train_knn)
-        trainKnnButton.pack(side="top", fill="both", expand=True, padx=25, pady=25)
-        trainDecisionTreeButton = tk.Button(t, text="Train using decision tree classifier", command=self.train_decision_tree)
-        trainDecisionTreeButton.pack(side="top", fill="both", expand=True, padx=25, pady=25)
-        trainSVMButton = tk.Button(t, text="Train using SVM classifier", command=self.train_svm)
-        trainSVMButton.pack(side="top", fill="both", expand=True, padx=25, pady=25)
-        trainRandForestButton = tk.Button(t, text="Train using Random Forest classifier", command=self.train_randForest)
-        trainRandForestButton.pack(side="top", fill="both", expand=True, padx=25, pady=25)
-        trainLogisticRegressionButton = tk.Button(t, text="Train using Logistic Regression classifier", command=self.train_logistic_regression)
-        trainLogisticRegressionButton.pack(side="top", fill="both", expand=True, padx=25, pady=25)
 
-        trainMLPButton = tk.Button(t, text="Train using MLP classifier",
-                                                  command=self.train_mlp)
-        trainMLPButton.pack(side="top", fill="both", expand=True, padx=25, pady=25)
+    def train(self, isCheckDecisionTree, isCheckedKnn, isCheckedMLP, isCheckedRandForest, isCheckedRegression, isCheckedSVM, isCheckedPerception):
+        if isCheckDecisionTree == 1:
+            decision_tree_maker_algoritm(self.train_folder)
+        if isCheckedKnn == 1:
+            knn_maker_algoritm(self.train_folder)
+        if isCheckedSVM == 1:
+            svm_maker_algoritm(self.train_folder)
+        if isCheckedMLP == 1:
+            mlp_maker_algoritm(self.train_folder)
+        if isCheckedRandForest == 1:
+            random_forest_maker_algoritm(self.train_folder)
+        if isCheckedRegression == 1:
+            logistic_regression_maker_algoritm(self.train_folder)
+        if isCheckedPerception == 1:
+            perception_maker_algoritm(self.train_folder)
 
-        trainPerceptronButton = tk.Button(t, text="Train using Perception classifier",
-                                                  command=self.train_perception)
-        trainPerceptronButton.pack(side="top", fill="both", expand=True, padx=25, pady=25)
-
-        trainButton = tk.Button(t, text="Train and save the best classifier", command=self.train)
-        trainButton.pack(side="top", fill="both", expand=True, padx=25, pady=25)
-        kMeansButton = tk.Button(t, text="K-Means", command=self.kmeans)
-        kMeansButton.pack(side="top", fill="both", expand=True, padx=25, pady=25)
-
-    def create_testing_window(self):
-        t = tk.Toplevel(self)
-        t.wm_title("Testing pannel")
-        w = tk.Label(t, text="abc")
-        w.pack(side="bottom", fill="both", expand=True, padx=100, pady=100)
-        chooseFileButton = tk.Button(t, text='Choose file', command=lambda: self.chooseFile(w))
-        chooseFileButton.pack(side="top", fill="both", expand=True, padx=100, pady=100)
-        showHistButton = tk.Button(t, text="Show histogram", command=self.showColorHist)
-        showHistButton.pack(side="top", fill="both", expand=True, padx=100, pady=100)
-
-    def train(self):
-        chooseClassifier(self.train_folder)
-        print("END")
-    def train_knn(self):
-        knn_maker_algoritm(self.train_folder)
-        print("END")
-    def train_mlp(self):
-        mlp_maker_algoritm(self.train_folder)
-        print("END")
-    def train_perception(self):
-        perception_maker_algoritm(self.train_folder)
-        print("END")
-    def train_logistic_regression(self):
-        logistic_regression_maker_algoritm(self.train_folder)
-        print("END")
-    def train_decision_tree(self):
-        decision_tree_maker_algoritm(self.train_folder)
         print("END")
     def kmeans(self):
         kmeans_algoritm(self.train_folder, 2)
-        print("END")
-    def train_randForest(self):
-        random_forest_maker_algoritm(self.train_folder)
-        print("END")
-    def train_svm(self):
-        svm_maker_algoritm(self.train_folder)
         print("END")
     def chooseTrainingData(self):
         self.train_folder = askdirectory()  # show an "Open" dialog box and return the path to the selected file
@@ -111,7 +56,7 @@ class MainWindow(tk.Frame):
         except:
             messagebox.showerror('Błędne dane', '"Niepoprawne dane treningowe. Sprawdź rozszerzenie (jpg) i nazwy plików.')
 
-    def chooseFile(self, label):
+    def chooseFile(self, label, imageLabel):
         filename = askopenfilename()  # show an "Open" dialog box and return the path to the selected file
         img = cv2.imread(filename)
         model = getModel()
@@ -123,6 +68,12 @@ class MainWindow(tk.Frame):
             label.config(text=result[0])
         if(img.size != 0):
             self.image=img
+            image2 = Image.open(
+                filename)  # This is the correct location and spelling for my image location
+            photo = ImageTk.PhotoImage(image2)
+            imageLabel.configure(image=photo)
+            imageLabel.image = photo
+
 
     def showHistGreyScale(img):
         hist = cv2.calcHist([img], [0], None, [256], [0, 256])
@@ -140,8 +91,71 @@ class MainWindow(tk.Frame):
             plt.title('Histogram for color scale picture')
             plt.show()
 
+    def __init__(self, *args, **kwargs):
+        tk.Frame.__init__(self, *args, **kwargs)
+
+        self.image = np.array([])
+        self.train_folder = ""
+
+        chooseTrainingDataButton = tk.Button(self, text="Choose training data", command=self.chooseTrainingData, width = 30)
+        chooseTrainingDataButton.grid(row=0, column=0)
+        checkTrainingDataButton = tk.Button(self, text="Check data", width = 30, command = self.checkTrainingData)
+        checkTrainingDataButton.grid(row=0, column=1)
+
+        kMeansButton = tk.Button(self, text="K-Means", command=self.kmeans, width=30)
+        kMeansButton.grid(row=0, column=2)
+
+        is_checkedKnn = tk.IntVar()
+        trainKnnButton = tk.Checkbutton(self, text="Train using knn classifier", width = 30, variable=is_checkedKnn)
+        trainKnnButton.grid(row=2, column=0)
+        is_checkedDecisionTree = tk.IntVar()
+        trainDecisionTreeButton = tk.Checkbutton(self, text="Train using decision tree classifier", width = 30, variable=is_checkedDecisionTree)
+        trainDecisionTreeButton.grid(row=2, column=1)
+
+        is_checkedSVM = tk.IntVar()
+        trainSVMButton = tk.Checkbutton(self, text="Train using SVM classifier", width = 30, variable = is_checkedSVM)
+        trainSVMButton.grid(row=2, column=2)
+        is_checkedRandForest = tk.IntVar()
+        trainRandForestButton = tk.Checkbutton(self, text="Train using Random Forest classifier", width = 30, variable = is_checkedRandForest)
+        trainRandForestButton.grid(row=4, column=0)
+
+        is_checkedRegression = tk.IntVar()
+        trainLogisticRegressionButton = tk.Checkbutton(self, text="Train using Logistic Regression classifier", width = 30, variable = is_checkedRegression)
+        trainLogisticRegressionButton.grid(row=4, column=1)
+
+        is_checkedMLP = tk.IntVar()
+        trainMLPButton = tk.Checkbutton(self, text="Train using MLP classifier", width = 30, variable = is_checkedMLP)
+        trainMLPButton.grid(row=4, column=2)
+
+        is_checkedPerception = tk.IntVar()
+        trainPerceptronButton = tk.Checkbutton(self, text="Train using Perception classifier", width = 30, variable = is_checkedPerception)
+        trainPerceptronButton.grid(row=5, column=0)
+
+        trainButton = tk.Button(self, text="Train and save the best classifier", command =lambda: self.train(is_checkedDecisionTree.get(), is_checkedKnn.get(), is_checkedMLP.get(), is_checkedRandForest.get(), is_checkedRegression.get(), is_checkedSVM.get(), is_checkedPerception.get()), width = 30)
+        trainButton.grid(row=6, column=0)
+
+        image = Image.open(
+            "C:/Users/Anna/PycharmProjects/Projekt/train2/cat.3.jpg")  # This is the correct location and spelling for my image location
+
+        photo = ImageTk.PhotoImage(image)
+        label = Label(image=photo)
+        label.image = photo
+        label.pack()
+
+        chooseFileButton = tk.Button(self, text='Choose file', command=lambda: self.chooseFile(w, label), width = 30)
+        chooseFileButton.grid(row=9, column=0)
+        showHistButton = tk.Button(self, text="Show histogram", command=self.showColorHist, width = 30)
+        showHistButton.grid(row=9, column=1)
+
+        w = tk.Label(self, text="Wynik", width = 30)
+        w.config(font=("Courier", 44))
+        w.grid(row=12, column=0,  columnspan=3, rowspan=3)
+
+
+
 if __name__ == "__main__":
     root = tk.Tk()
+    root.minsize(width=600, height=600)
     main = MainWindow(root)
     main.pack(side="top", fill="both", expand=True)
     root.mainloop()
